@@ -2,6 +2,7 @@ import "./App.css";
 import Header from "./Components/Header";
 import AddTask from "./Components/AddTask";
 import { useEffect, useState } from "react";
+import { AiFillDelete } from "react-icons/ai";
 // import axios from "axios";
 
 function App() {
@@ -77,23 +78,25 @@ function App() {
         <div className="bg-white p-3 rounded-lg backdrop-blur-lg bg-opacity-40 drop-shadow-lg ">
           <Header></Header>
           <AddTask addTaskFn={addTaskHandler}></AddTask>
-          <ul className="flex flex-col gap-5 list-inside max-h-[15vh] overflow-auto px-6">
+          <ul className="flex flex-col gap-5 list-inside max-h-[15vh] overflow-auto scrollbar-hide  px-6">
             {tasks.map((task) => (
               <li key={task.id} className="flex justify-between items-center">
-                <div>
+                <div className="flex items-center">
                   <input
-                    className="rounded checked:bg-teal-300 active:focus:bg-teal-300"
+                    className="rounded mr-3"
                     type="checkbox"
                     checked={task.completed}
                     onChange={() => pippoFn(task.id)}
                   />{" "}
-                  {task.description}
+                  <span className={`${task.completed ? "line-through" : ""}`}>
+                    {task.description}
+                  </span>
                 </div>
                 <button
-                  className="bg-red-500 p-2 rounded-lg"
+                  className="bg-gray-700 p-2 rounded-lg"
                   onClick={() => deleteFn(task.id)}
                 >
-                  DELETE
+                  <AiFillDelete className="text-red-500"></AiFillDelete>
                 </button>
               </li>
             ))}

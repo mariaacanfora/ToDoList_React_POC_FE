@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { MdAssignmentAdd } from "react-icons/md";
 
 interface Props {
   addTaskFn: (string: string) => void;
@@ -12,6 +13,12 @@ export default function AddTask({ addTaskFn }: Props) {
     setValue("");
   }
 
+  function handleKeyDown(event: any) {
+    if (event.key === "Enter") {
+      addTask();
+    }
+  }
+
   return (
     <div className="flex gap-x-3 pb-20">
       <input
@@ -20,13 +27,14 @@ export default function AddTask({ addTaskFn }: Props) {
         placeholder="Add a new task"
         value={value}
         onChange={(event) => setValue(event.target.value)}
+        onKeyUp={handleKeyDown}
       ></input>
       <button
-        className="uppercase bg-orange-500 rounded-lg p-2"
+        className="uppercase bg-green-500 rounded-lg p-2"
         onClick={() => addTask()}
         disabled={value === ""}
       >
-        Add
+        <MdAssignmentAdd></MdAssignmentAdd>
       </button>
     </div>
   );

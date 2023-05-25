@@ -20,7 +20,7 @@ export default function AddTask({ addTaskFn }: Props) {
   }
 
   return (
-    <div className="flex gap-x-3 pb-20">
+    <div className="flex gap-x-3 pb-10">
       <input
         type="text"
         className="border-blue-600 rounded-lg basis-3/4"

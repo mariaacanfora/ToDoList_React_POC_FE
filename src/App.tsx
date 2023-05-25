@@ -3,7 +3,8 @@ import Header from "./Components/Header";
 import AddTask from "./Components/AddTask";
 import { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
-// import axios from "axios";
+import { TbArrowBigDownLines } from "react-icons/tb";
+import { motion } from "framer-motion";
 
 interface Task {
   id: number;
@@ -99,9 +100,19 @@ function App() {
         <div className="bg-white p-3 rounded-lg backdrop-blur-lg bg-opacity-40 drop-shadow-lg ">
           <Header></Header>
           <AddTask addTaskFn={addTaskHandler}></AddTask>
-          <div>Task totali: {tasks.length}</div>
-          <div>Task completati: {completed}</div>
-          <div>Task da completare: {toDo}</div>
+          <div className="flex flex-col pb-10">
+            <div>
+              <span className="font-bold">Task TOTALI: {tasks.length}</span>
+            </div>
+            <div>
+              Task completati:{" "}
+              <span className="text-green-700 font-bold">{completed}</span>{" "}
+            </div>
+            <div>
+              Task da completare:{" "}
+              <span className="text-red-700 font-bold">{toDo}</span>
+            </div>
+          </div>
           <ul className="flex flex-col gap-5 list-inside max-h-[15vh] overflow-auto scrollbar-hide  px-6">
             {tasks.map((task) => (
               <li key={task.id} className="flex justify-between items-center">
@@ -125,6 +136,20 @@ function App() {
               </li>
             ))}
           </ul>
+
+          <div>
+            {tasks.length > 3 ? (
+              <motion.div
+                className="flex justify-center"
+                animate={{
+                  y: 10,
+                }}
+                transition={{ duration: 2, yoyo: Infinity, repeat: Infinity }}
+              >
+                <TbArrowBigDownLines className="text-2xl"></TbArrowBigDownLines>
+              </motion.div>
+            ) : null}
+          </div>
         </div>
       </div>
     </>

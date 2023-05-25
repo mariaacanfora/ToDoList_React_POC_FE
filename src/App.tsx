@@ -20,9 +20,6 @@ function App() {
   const [toDo, setToDo] = useState<number>(0);
 
   function addTaskHandler(string: string) {
-    // const existingTask = tasks.filter((task) => (task.description = string));
-
-    // if (!existingTask) {
     fetch(import.meta.env.VITE_APP_URL_BE, {
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +33,6 @@ function App() {
           return [...oldTasks, data];
         })
       );
-    // }
   }
 
   function editFn(id: number) {

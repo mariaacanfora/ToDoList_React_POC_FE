@@ -4,6 +4,7 @@ import AddTask from "./Components/AddTask";
 import { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { TbArrowBigDownLines } from "react-icons/tb";
+import { CiWarning } from "react-icons/ci";
 import { motion } from "framer-motion";
 
 interface Task {
@@ -19,8 +20,18 @@ function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [completed, setCompleted] = useState<number>(0);
   const [toDo, setToDo] = useState<number>(0);
+  const [alreadyExists, setAlreadyExists] = useState<boolean>(false);
 
   function addTaskHandler(string: string) {
+    const mappedTasks = tasks.map((item) => item.description);
+
+    if (mappedTasks.includes(string)) {
+      setAlreadyExists(true);
+      return;
+    } else {
+      setAlreadyExists(false);
+    }
+
     fetch(import.meta.env.VITE_APP_URL_BE, {
       headers: {
         "Content-Type": "application/json",
@@ -150,6 +161,24 @@ function App() {
               </motion.div>
             ) : null}
           </div>
+
+          {alreadyExists ? (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-[28rem] rounded-lg overflow-hidden ring-2 ring-offset-2 ring-red-500">
+              <div className="bg-white flex flex-col text-2xl text-center uppercase justify-around h-full items-center backdrop-blur-lg bg-opacity-80 drop-shadow-lg">
+                <span className="flex items-center gap-x-4">
+                  <CiWarning className="text-red-600"></CiWarning>
+                  Questo task esiste già!
+                  <CiWarning className="text-red-600"></CiWarning>
+                </span>
+                <button
+                  className="bg-green-500 w-1/4 rounded-lg uppercase text-white"
+                  onClick={() => setAlreadyExists(false)}
+                >
+                  ok
+                </button>
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </>
